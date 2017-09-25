@@ -56,12 +56,28 @@ class LinkedList {
 	    if (index < 0 || index >= this.length) {
 			throw new Error (message.failure);
 		}
-		
-		var temp = this._head;  // переменная, показывающая текущую позицию
+		var temp = this._head,		// переменная, показывающая текущую позицию
+		    temp2,
+			temp3;
+		var node  = new Node();
 		for (var i = 0; i < index; i++) {
 			temp = temp.next;
 		}
-		
+		this.length++;
+		temp2 = temp;
+		for (var i = index + 1; i < this.length; i++) {
+			if (temp2.next === null) { // при достижении конца списка
+				this._tail = temp2;
+				this._tail.next = node; // добавление нового узла в связи с увеличением списка на один элемент
+			    node.prev = this._tail; 
+			    this._tail = node;
+				node.data = temp2.data; // присвоение последнему узлу в списке значенияж
+			} else {
+		    temp3 = temp2.next; // переход по списку и смещение значений в узлах списка
+			temp2.next.data = temp2.data;
+			temp2 = temp3;
+			}
+		}
 		temp.data = data;
 		return this;	
 	}
